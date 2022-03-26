@@ -166,7 +166,7 @@ export const AddAlertScreen = () => {
         validationSchema={PointAlertFormValidationSchema}
       >
         <Fragment>
-          <Text style={styles.title}>Point Alert</Text>
+          <Text style={styles.title}>Points Alert</Text>
           <Text style={styles.subTitle}>Longitude</Text>
           <TextField
             placeholder={"Longitude"}
@@ -263,10 +263,10 @@ export const AddAlertScreen = () => {
                   ? pointArea.numOfPoints
                     ? pointArea.locations.concat([[0, 0]])
                     : pointArea.locations.concat([
-                        [0, 0],
-                        [0, 0],
-                        [0, 0],
-                      ])
+                      [0, 0],
+                      [0, 0],
+                      [0, 0],
+                    ])
                   : pointArea.locations,
             });
           }}

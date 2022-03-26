@@ -50,16 +50,14 @@ export const ProfileScreen = () => {
       dispatch(setAlert(<LoadingAlert />));
       const token = await AsyncStorage.getItem("token");
       console.log(
-        `${apiData.REACT_APP_API}/${
-          user?.role === "admin" ? "admin" : "user"
+        `${apiData.REACT_APP_API}/${user?.role === "admin" ? "admin" : "user"
         }/update`
       );
 
       const fetchedData = await axios({
         method: "PUT",
-        url: `${apiData.REACT_APP_API}/${
-          user?.role === "admin" ? "admin" : "user"
-        }/update`,
+        url: `${apiData.REACT_APP_API}/${user?.role === "admin" ? "admin" : "user"
+          }/update`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -104,7 +102,7 @@ export const ProfileScreen = () => {
         validationSchema={ProfileFormValidationSchema}
       >
         <Fragment>
-          <Text style={styles.title}>Admin</Text>
+          <Text style={styles.title}> {user?.role === "admin" ? "Admin" : "Private"}</Text>
           <Text style={{ fontSize: 22, marginBottom: 20, alignSelf: "center" }}>
             Profile update
           </Text>
