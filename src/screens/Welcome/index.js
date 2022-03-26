@@ -72,7 +72,8 @@ export const WelcomeScreen = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container}
+      showsVerticalScrollIndicator={false}>
       {!user?._id && (
         <View>
           <Text style={[styles.title, { marginTop: "15%" }]}> SJAWS </Text>

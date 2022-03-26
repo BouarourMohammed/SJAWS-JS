@@ -86,6 +86,10 @@ export const BottomTabNavigation = () => {
               <AddIcon fill={focused ? COLORS.yellow : COLORS.white} />
             ),
           }}
+          listeners={{
+            tabPress: e => {
+            }
+          }}
         />
       )}
       {admin && (
