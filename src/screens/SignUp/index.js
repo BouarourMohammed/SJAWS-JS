@@ -53,7 +53,7 @@ export const SignUpScreen = () => {
         validationSchema={SignUpFormValidationSchema}
       >
         <Fragment>
-          <Text style={styles.title}>Signin</Text>
+          <Text style={styles.title}>Sign Up</Text>
           <Text style={styles.subTitle}>Name</Text>
           <TextField
             placeholder={"Name"}
