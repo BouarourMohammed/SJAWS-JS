@@ -44,7 +44,7 @@ export const ForgotPasswordScreen = () => {
         validationSchema={ForgotFormValidationSchema}
       >
         <Fragment>
-          <Text style={styles.title}>Signin</Text>
+          <Text style={styles.title}>Forgot Password</Text>
           <Text style={styles.subTitle}>Email</Text>
           <TextField
             placeholder={"Email"}
