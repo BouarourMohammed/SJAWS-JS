@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Formik } from "formik";
 import React, { Fragment } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { KeyboardAvoidingView, Platform, StyleSheet, Text, View } from "react-native";
 import { apiData } from "../../api/appInfo";
 import { COLORS } from "../../assets/colors";
 import {
@@ -34,7 +34,10 @@ export const ForgotPasswordScreen = () => {
     }
   };
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
       <Formik
         initialValues={{
           email: "subs@subs.com",
@@ -63,7 +66,7 @@ export const ForgotPasswordScreen = () => {
           />
         </Fragment>
       </Formik>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

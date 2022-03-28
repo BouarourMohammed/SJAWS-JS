@@ -5,7 +5,7 @@ import {
 } from "@react-navigation/native";
 import { Formik } from "formik";
 import React, { Fragment, useCallback, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { create, editByIdAuth, getByIdAuth } from "../../api/common";
 import { COLORS } from "../../assets/colors";
@@ -49,8 +49,10 @@ export const AddAlertScreen = () => {
 
         return;
       } else {
-        if (isNotCoordinate(data)) {
-          setErrorValidation("Values must be between +90 and -90");
+        const error = isNotCoordinate(data);
+        if (error) {
+          error === 1 ? setErrorValidation("latitude must be between +90 and -90") : null;
+          error === 2 ? setErrorValidation("longitude must be between +180 and -180") : null;
           return;
         }
       }
@@ -149,144 +151,56 @@ export const AddAlertScreen = () => {
     dispatch(setNavigation(false));
   }, [focused]);
 
-  return (
-    <ScrollView
-      style={{ flex: 1, backgroundColor: COLORS.white }}
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-    >
-      <Formik
-        initialValues={{
-          long: long.toString(),
-          lat: lat.toString(),
-          radius: radius.toString(),
-        }}
-        onSubmit={handlePointSubmit}
-        enableReinitialize
-        validationSchema={PointAlertFormValidationSchema}
-      >
-        <Fragment>
-          <Text style={styles.title}>Points Alert</Text>
-          <Text style={styles.subTitle}>Longitude</Text>
-          <TextField
-            placeholder={"Longitude"}
-            name={"long"}
-            keyboardType={"numeric"}
-            style={{ marginBottom: 10, paddingLeft: 16 }}
-          />
 
-          <Text style={styles.subTitle}>Latitude</Text>
-          <TextField
-            placeholder={"Latitude"}
-            name={"lat"}
-            keyboardType={"numeric"}
-            style={{ marginBottom: 10, paddingLeft: 16 }}
-          />
-          <Text style={styles.subTitle}>Radius in meters</Text>
-          <TextField
-            placeholder={"Radius in meters"}
-            name={"radius"}
-            keyboardType={"numeric"}
-            style={{ marginBottom: 10, paddingLeft: 16 }}
-          />
-          <View
-            style={{ flexDirection: "row", marginBottom: 20, marginTop: 5 }}
-          >
-            <FormSubmitButton
-              textStyle={{ color: COLORS.white }}
-              style={{
-                backgroundColor: COLORS.blue,
-                borderColor: COLORS.blue,
-                marginRight: "auto",
-                paddingHorizontal: 20,
-              }}
-              title={"Submit"}
-            />
-            <FormResetButton
-              title="Reset"
-              style={{ paddingHorizontal: 20 }}
-              onPress={resetPointForm}
-            />
-          </View>
-        </Fragment>
-      </Formik>
-      <Text style={styles.title}>Polygon Alerts</Text>
-      <Text style={[styles.subTitle, { alignSelf: "center" }]}>
-        Min 3 points | Max 8 points
-      </Text>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          alignSelf: "center",
-          marginVertical: 10,
-        }}
+
+
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <ScrollView
+        style={{ flex: 1, backgroundColor: COLORS.white, marginBottom: 10 }}
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
       >
-        <Button
-          variant="TYPE2"
-          title="-"
-          style={{ width: "15%" }}
-          textStyle={styles.incrementText}
-          onPress={() => {
-            const nbr = pointArea.numOfPoints
-              ? Math.max(Number(pointArea.numOfPoints) - 1, 3)
-              : "";
-            setPointArea({
-              numOfPoints: nbr.toString(),
-              locations:
-                Number(pointArea.numOfPoints) > 3
-                  ? pointArea.locations.slice(0, nbr)
-                  : pointArea.locations,
-            });
+        <Formik
+          initialValues={{
+            long: long.toString(),
+            lat: lat.toString(),
+            radius: radius.toString(),
           }}
-        />
-        <Text style={{ fontSize: 20, paddingHorizontal: 30 }}>
-          {pointArea.numOfPoints}
-        </Text>
-        <Button
-          variant="TYPE2"
-          title="+"
-          style={{
-            width: "15%",
-            backgroundColor: COLORS.blue,
-            borderColor: COLORS.blue,
-          }}
-          textStyle={styles.incrementText}
-          onPress={() => {
-            const nbr = pointArea.numOfPoints
-              ? Math.min(Number(pointArea.numOfPoints) + 1, 8)
-              : 3;
-            setPointArea({
-              numOfPoints: nbr.toString(),
-              locations:
-                Number(pointArea.numOfPoints) < 8
-                  ? pointArea.numOfPoints
-                    ? pointArea.locations.concat([[0, 0]])
-                    : pointArea.locations.concat([
-                      [0, 0],
-                      [0, 0],
-                      [0, 0],
-                    ])
-                  : pointArea.locations,
-            });
-          }}
-        />
-      </View>
-      <Formik
-        initialValues={{ locations: pointArea.locations }}
-        onSubmit={(value) => handlePolygonSubmit(value.locations)}
-        enableReinitialize
-      >
-        {pointArea.numOfPoints && (
+          onSubmit={handlePointSubmit}
+          enableReinitialize
+          validationSchema={PointAlertFormValidationSchema}
+        >
           <Fragment>
-            <TextInputList
-              name="locations"
-              count={Number(pointArea.numOfPoints)}
+            <Text style={styles.title}>Points Alert</Text>
+            <Text style={styles.subTitle}>Longitude</Text>
+            <TextField
+              placeholder={"Longitude"}
+              name={"long"}
+              keyboardType={Platform.OS === "ios" ? 'numbers-and-punctuation' : 'numeric'}
+              style={{ marginBottom: 10, paddingLeft: 16 }}
             />
-            <Text style={{ color: COLORS.red, textAlign: "center" }}>
-              {errorValidation}
-            </Text>
-            <View style={{ flexDirection: "row" }}>
+
+            <Text style={styles.subTitle}>Latitude</Text>
+            <TextField
+              placeholder={"Latitude"}
+              name={"lat"}
+              keyboardType={Platform.OS === "ios" ? 'numbers-and-punctuation' : 'numeric'}
+              style={{ marginBottom: 10, paddingLeft: 16 }}
+            />
+            <Text style={styles.subTitle}>Radius in meters</Text>
+            <TextField
+              placeholder={"Radius in meters"}
+              name={"radius"}
+              keyboardType={Platform.OS === "ios" ? 'numbers-and-punctuation' : 'numeric'}
+              style={{ marginBottom: 10, paddingLeft: 16 }}
+            />
+            <View
+              style={{ flexDirection: "row", marginBottom: 20, marginTop: 5 }}
+            >
               <FormSubmitButton
                 textStyle={{ color: COLORS.white }}
                 style={{
@@ -300,13 +214,109 @@ export const AddAlertScreen = () => {
               <FormResetButton
                 title="Reset"
                 style={{ paddingHorizontal: 20 }}
-                onPress={resetPolygonForm}
+                onPress={resetPointForm}
               />
             </View>
           </Fragment>
-        )}
-      </Formik>
-    </ScrollView>
+        </Formik>
+        <Text style={styles.title}>Polygon Alerts</Text>
+        <Text style={[styles.subTitle, { alignSelf: "center" }]}>
+          Min 3 points | Max 8 points
+        </Text>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            alignSelf: "center",
+            marginVertical: 10,
+          }}
+        >
+          <Button
+            variant="TYPE2"
+            title="-"
+            style={{ width: "15%" }}
+            textStyle={styles.incrementText}
+            onPress={() => {
+              const nbr = pointArea.numOfPoints
+                ? Math.max(Number(pointArea.numOfPoints) - 1, 3)
+                : "";
+              setPointArea({
+                numOfPoints: nbr.toString(),
+                locations:
+                  Number(pointArea.numOfPoints) > 3
+                    ? pointArea.locations.slice(0, nbr)
+                    : pointArea.locations,
+              });
+            }}
+          />
+          <Text style={{ fontSize: 20, paddingHorizontal: 30 }}>
+            {pointArea.numOfPoints}
+          </Text>
+          <Button
+            variant="TYPE2"
+            title="+"
+            style={{
+              width: "15%",
+              backgroundColor: COLORS.blue,
+              borderColor: COLORS.blue,
+            }}
+            textStyle={styles.incrementText}
+            onPress={() => {
+              const nbr = pointArea.numOfPoints
+                ? Math.min(Number(pointArea.numOfPoints) + 1, 8)
+                : 3;
+              setPointArea({
+                numOfPoints: nbr.toString(),
+                locations:
+                  Number(pointArea.numOfPoints) < 8
+                    ? pointArea.numOfPoints
+                      ? pointArea.locations.concat([[0, 0]])
+                      : pointArea.locations.concat([
+                        [0, 0],
+                        [0, 0],
+                        [0, 0],
+                      ])
+                    : pointArea.locations,
+              });
+            }}
+          />
+        </View>
+        <Formik
+          initialValues={{ locations: pointArea.locations }}
+          onSubmit={(value) => handlePolygonSubmit(value.locations)}
+          enableReinitialize
+        >
+          {pointArea.numOfPoints && (
+            <Fragment>
+              <TextInputList
+                name="locations"
+                count={Number(pointArea.numOfPoints)}
+              />
+              <Text style={{ color: COLORS.red, textAlign: "center" }}>
+                {errorValidation}
+              </Text>
+              <View style={{ flexDirection: "row", marginBottom: 40 }}>
+                <FormSubmitButton
+                  textStyle={{ color: COLORS.white }}
+                  style={{
+                    backgroundColor: COLORS.blue,
+                    borderColor: COLORS.blue,
+                    marginRight: "auto",
+                    paddingHorizontal: 20,
+                  }}
+                  title={"Submit"}
+                />
+                <FormResetButton
+                  title="Reset"
+                  style={{ paddingHorizontal: 20 }}
+                  onPress={resetPolygonForm}
+                />
+              </View>
+            </Fragment>
+          )}
+        </Formik>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -316,7 +326,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     paddingHorizontal: 30,
     paddingTop: "10%",
-    paddingBottom: "5%",
   },
   title: {
     fontSize: 30,

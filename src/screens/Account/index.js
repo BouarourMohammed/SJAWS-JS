@@ -14,6 +14,7 @@ export const AccountScreen = () => {
     setSubscriptions(fetchedData?.data?.data);
   };
 
+
   useEffect(() => {
     getSubscriptions();
   }, []);

@@ -37,6 +37,7 @@ export const editByIdAuth = async (values, url, id) => {
 export const getAllAuth = async (url) => {
   try {
     const token = await getToken();
+
     return await axios.get(`${apiData.REACT_APP_API}/${url}`, {
       headers: {
         Authorization: `Bearer ${token}`,

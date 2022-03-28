@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { Formik } from "formik";
 import React, { Fragment } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { apiData } from "../../api/appInfo";
 import { COLORS } from "../../assets/colors";
 import {
@@ -41,7 +41,11 @@ export const SignUpScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : 'height'}
+      style={styles.container}
+      keyboardVerticalOffset={-20}
+    >
       <Formik
         initialValues={{
           name: "TestName",
@@ -72,7 +76,7 @@ export const SignUpScreen = () => {
             name={"password"}
             style={{ marginBottom: 20, paddingLeft: 16 }}
           />
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", marginBottom: '15%' }}>
             <FormSubmitButton
               textStyle={{ color: COLORS.white }}
               style={{
@@ -91,7 +95,7 @@ export const SignUpScreen = () => {
           </View>
         </Fragment>
       </Formik>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -101,7 +105,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: COLORS.white,
     paddingHorizontal: 30,
-    paddingBottom: 40,
   },
   title: {
     fontSize: 30,
@@ -114,3 +117,4 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
 });
+

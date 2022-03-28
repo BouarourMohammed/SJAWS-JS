@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Formik } from "formik";
 import React, { Fragment, useCallback } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from "react-native";
 import { COLORS } from "../../assets/colors";
 import { FormSubmitButton } from "../../components/FormSubmitButton";
 import { PasswordField } from "../../components/PasswordField";
@@ -86,73 +86,78 @@ export const ProfileScreen = () => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
     >
-      <Formik
-        initialValues={{
-          role: user?.role,
-          name: user?.name,
-          email: user?.email,
-          password: "",
-        }}
-        onSubmit={clickSubmit}
-        enableReinitialize
-        validationSchema={ProfileFormValidationSchema}
+      <ScrollView
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
       >
-        <Fragment>
-          <Text style={styles.title}> {user?.role === "admin" ? "Admin" : "Private"}</Text>
-          <Text style={{ fontSize: 22, marginBottom: 20, alignSelf: "center" }}>
-            Profile update
-          </Text>
-          <Text style={styles.subTitle}>Role</Text>
-          <TextField
-            placeholder={"Role"}
-            name={"role"}
-            editable={false}
-            style={{ marginBottom: 20, paddingLeft: 16 }}
-          />
-          <Text style={styles.subTitle}>Name</Text>
-          <TextField
-            placeholder={"Name"}
-            name={"name"}
-            style={{ marginBottom: 20, paddingLeft: 16 }}
-          />
-          <Text style={styles.subTitle}>Email</Text>
-          <TextField
-            placeholder={"Email"}
-            name={"email"}
-            editable={false}
-            style={{ marginBottom: 20, paddingLeft: 16 }}
-          />
-          <Text style={styles.subTitle}>Password</Text>
-          <PasswordField
-            placeholder={"Password"}
-            name={"password"}
-            style={{ marginBottom: 20, paddingLeft: 16 }}
-          />
-          <View style={{ flexDirection: "row" }}>
-            <FormSubmitButton
-              textStyle={{ color: COLORS.white }}
-              style={{
-                backgroundColor: COLORS.blue,
-                borderColor: COLORS.blue,
-                marginRight: "auto",
-                paddingHorizontal: 20,
-              }}
-              title={"Submit"}
+        <Formik
+          initialValues={{
+            role: user?.role,
+            name: user?.name,
+            email: user?.email,
+            password: "",
+          }}
+          onSubmit={clickSubmit}
+          enableReinitialize
+          validationSchema={ProfileFormValidationSchema}
+        >
+          <Fragment>
+            <Text style={styles.title}> {user?.role === "admin" ? "Admin" : "Private"}</Text>
+            <Text style={{ fontSize: 22, marginBottom: 20, alignSelf: "center" }}>
+              Profile update
+            </Text>
+            <Text style={styles.subTitle}>Role</Text>
+            <TextField
+              placeholder={"Role"}
+              name={"role"}
+              editable={false}
+              style={{ marginBottom: 20, paddingLeft: 16 }}
             />
-            <Button
-              title="Log Out"
-              onPress={signout}
-              variant="TYPE1"
-              style={{ paddingHorizontal: 20 }}
+            <Text style={styles.subTitle}>Name</Text>
+            <TextField
+              placeholder={"Name"}
+              name={"name"}
+              style={{ marginBottom: 20, paddingLeft: 16 }}
             />
-          </View>
-        </Fragment>
-      </Formik>
-    </ScrollView>
+            <Text style={styles.subTitle}>Email</Text>
+            <TextField
+              placeholder={"Email"}
+              name={"email"}
+              editable={false}
+              style={{ marginBottom: 20, paddingLeft: 16 }}
+            />
+            <Text style={styles.subTitle}>Password</Text>
+            <PasswordField
+              placeholder={"Password"}
+              name={"password"}
+              style={{ marginBottom: 20, paddingLeft: 16 }}
+            />
+            <View style={{ flexDirection: "row", marginBottom: 40 }}>
+              <FormSubmitButton
+                textStyle={{ color: COLORS.white }}
+                style={{
+                  backgroundColor: COLORS.blue,
+                  borderColor: COLORS.blue,
+                  marginRight: "auto",
+                  paddingHorizontal: 20,
+                }}
+                title={"Submit"}
+              />
+              <Button
+                title="Log Out"
+                onPress={signout}
+                variant="TYPE1"
+                style={{ paddingHorizontal: 20 }}
+              />
+            </View>
+          </Fragment>
+        </Formik>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

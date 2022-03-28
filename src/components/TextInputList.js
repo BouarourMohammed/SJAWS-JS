@@ -1,6 +1,6 @@
 import { useField } from "formik";
 import React, { useCallback, useMemo } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Platform, StyleSheet, Text, TextInput, View } from "react-native";
 import { COLORS } from "../assets/colors";
 
 export const TextInputList = (props) => {
@@ -27,7 +27,7 @@ export const TextInputList = (props) => {
                   <TextInput
                     style={styles.inputStyle}
                     autoCorrect={false}
-                    keyboardType="numeric"
+                    keyboardType={Platform.OS === "ios" ? 'numbers-and-punctuation' : 'numeric'}
                     autoCapitalize={"none"}
                     allowFontScaling={false}
                     placeholder={"Latitude"}
@@ -45,7 +45,7 @@ export const TextInputList = (props) => {
                   <TextInput
                     style={styles.inputStyle}
                     autoCorrect={false}
-                    keyboardType="numeric"
+                    keyboardType={Platform.OS === "ios" ? 'numbers-and-punctuation' : 'numeric'}
                     autoCapitalize={"none"}
                     allowFontScaling={false}
                     placeholder={"Longitude"}

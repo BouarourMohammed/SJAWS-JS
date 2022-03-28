@@ -4,11 +4,18 @@ import { StyleSheet, Text, View } from "react-native";
 import { getAllAuth } from "../api/common";
 import { COLORS } from "../assets/colors";
 import { Button } from "./Button";
+import * as Linking from 'expo-linking';
 
 export const SubscriptionsCard = (props) => {
   const navigation = useNavigation();
   const manageSubscriptions = async () => {
-    const { data } = await getAllAuth("customer-portal");
+    console.log('start ');
+    try {
+      const { data } = await getAllAuth("customer-portal");
+      Linking.openURL('http://165.227.42.223/');
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <View style={props.style}>
