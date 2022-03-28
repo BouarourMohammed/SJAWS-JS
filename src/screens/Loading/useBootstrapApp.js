@@ -30,7 +30,7 @@ export const useBootstrapApp = () => {
         dispatch(setProfile(user));
         navigation.navigate("BottomTabNavigation");
       } else {
-        navigation.navigate("WelcomeScreen");
+        navigation.navigate("DrawerNavigation");
       }
       //console.log(store.data.store);
       //dispatch(setProfile(store.data.store));
@@ -39,7 +39,7 @@ export const useBootstrapApp = () => {
       // navigation.navigate("BottomTabNavigation");
     } catch (e) {
       //console.log(JSON.stringify(e));
-      navigation.navigate("WelcomeScreen");
+      navigation.navigate("DrawerNavigation");
     }
   }, [navigation]);
 

@@ -9,3 +9,4 @@ export { MapScreen } from "./Map";
 export { PlanDetailScreen } from "./PlanDetails";
 export { ProfileScreen } from "./Profile";
 export { WelcomeScreen } from "./Welcome";
+export { LoadingScreen } from "./Loading";

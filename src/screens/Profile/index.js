@@ -38,7 +38,7 @@ export const ProfileScreen = () => {
       await AsyncStorage.removeItem("user");
       dispatch(clearAlert());
       navigation.popToTop();
-      navigation.navigate("WelcomeScreen");
+      navigation.navigate("DrawerNavigation");
     } catch (error) {
       console.log(error);
       dispatch(setAlert(<FailureAlert message={"Signing Out Problem"} />));
