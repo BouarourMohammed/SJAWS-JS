@@ -1,7 +1,7 @@
 import { useIsFocused } from "@react-navigation/native";
 import React, { Fragment, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import MapView, { Callout, Circle, Marker, Polygon } from "react-native-maps";
+import MapView, { Callout, Circle, Marker, Polygon, PROVIDER_GOOGLE } from "react-native-maps";
 import { useDispatch } from "react-redux";
 import { apiData } from "../../api/appInfo";
 import { getAllAuth } from "../../api/common";
@@ -68,7 +68,7 @@ export const MapScreen = () => {
   return (
     <View style={styles.container}>
       {subscriber ? (
-        <MapView style={styles.map}>
+        <MapView style={styles.map} provider={PROVIDER_GOOGLE}>
           {polygons &&
             polygons?.length > 0 &&
             polygons.map((polygon, index) => (
