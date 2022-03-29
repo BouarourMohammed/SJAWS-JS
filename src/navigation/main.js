@@ -13,12 +13,16 @@ export const RootStack = () => {
       initialRouteName={"LoadingScreen"}
       screenOptions={{ headerShown: false }}
     >
+
       <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
-      <Stack.Screen name="DrawerNavigation" component={DrawerNavigation} />
-      <Stack.Screen
-        name="BottomTabNavigation"
-        component={BottomTabNavigation}
-      />
+      {/* Drawer Navigation  */}
+      {/*<Stack.Screen name="root" component={DrawerNavigation} />*/}
+
+      {/* Bar Navigation  */}
+      {/* <Stack.Screen name="root" component={BottomTabNavigation} />*/}
+
+      <Stack.Screen name="root" component={DrawerNavigation} />
+
     </Stack.Navigator>
   );
 };

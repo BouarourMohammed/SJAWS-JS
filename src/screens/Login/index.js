@@ -38,7 +38,7 @@ export const LoginScreen = () => {
         );
       }
       dispatch(clearAlert());
-      navigation.navigate("BottomTabNavigation");
+      navigation.navigate("HomeScreen");
     } catch (error) {
       dispatch(setAlert(<FailureAlert message={error.response.data.error} />));
       // saving error

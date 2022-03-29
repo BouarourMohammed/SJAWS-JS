@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { COLORS } from "../assets/colors";
 import { useProfile } from "../state";
 import { Button } from "./Button";
@@ -55,7 +55,10 @@ export const PlanCard = (props) => {
       >
         <Text style={styles.priceText}>
           $
-          {Number(
+          {Platform.OS === 'ios' ? (props.price.unit_amount / 100).toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+          }) : Number(
             (props.price.unit_amount / 100).toLocaleString("en-US", {
               style: "currency",
               currency: "USD",
@@ -68,7 +71,7 @@ export const PlanCard = (props) => {
         <Button
           title={
             props.userSubscriptions &&
-            props.userSubscriptions.includes(props.price.id)
+              props.userSubscriptions.includes(props.price.id)
               ? "Access plan"
               : buttonText()
           }

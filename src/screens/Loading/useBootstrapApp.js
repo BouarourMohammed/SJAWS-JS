@@ -27,10 +27,11 @@ export const useBootstrapApp = () => {
       });
 
       if (fetchedData?.data) {
+        console.log('exist');
         dispatch(setProfile(user));
-        navigation.navigate("BottomTabNavigation");
+        navigation.navigate('root', { screen: "HomeScreen" });
       } else {
-        navigation.navigate("DrawerNavigation");
+        navigation.navigate('root', { screen: "WelcomeScreen" });
       }
       //console.log(store.data.store);
       //dispatch(setProfile(store.data.store));
@@ -39,7 +40,7 @@ export const useBootstrapApp = () => {
       // navigation.navigate("BottomTabNavigation");
     } catch (e) {
       //console.log(JSON.stringify(e));
-      navigation.navigate("DrawerNavigation");
+      navigation.navigate('root', { screen: "WelcomeScreen" });
     }
   }, [navigation]);
 

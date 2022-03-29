@@ -12,24 +12,35 @@ import { COLORS } from "../../assets/colors";
 import { Button } from "../../components/Button";
 import { Divider } from "../../components/Divider";
 import { PlanCard } from "../../components/PlanCard";
+import { useDisableAndroidBackHandler } from "../../hooks/useDisableAndroidBackHandler";
 import { useProfile } from "../../state";
 
 export const WelcomeScreen = () => {
   const navigation = useNavigation();
   const { user } = useProfile();
+
   //console.log(user);
 
   const [prices, setPrices] = useState([]);
   const [userSubscriptions, setUserSubscriptions] = useState([]);
 
   const fetchPrices = async () => {
-    const { data } = await getAllAuth("prices");
-    //console.log("data", data);
-    setPrices(data);
+    try {
+      const { data } = await getAllAuth("prices");
+      //console.log("data", data);
+      setPrices(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   useEffect(() => {
     fetchPrices();
+    // just clean up 
+    return () => setPrices('');
   }, []);
+
+  useDisableAndroidBackHandler();
 
   useEffect(() => {
     let result = [];

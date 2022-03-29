@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { useDisableAndroidBackHandler } from "./useDisableAndroidBackHandler";
+import { useDisableAndroidBackHandler } from "../../hooks/useDisableAndroidBackHandler";
 
 export const HomeScreen = () => {
   useDisableAndroidBackHandler();
