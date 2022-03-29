@@ -54,11 +54,11 @@ export const PlanCard = (props) => {
         ]}
       >
         <Text style={styles.priceText}>
-          $
+
           {Platform.OS === 'ios' ? (props.price.unit_amount / 100).toLocaleString("en-US", {
             style: "currency",
             currency: "USD",
-          }) : Number(
+          }) : '$' + Number(
             (props.price.unit_amount / 100).toLocaleString("en-US", {
               style: "currency",
               currency: "USD",

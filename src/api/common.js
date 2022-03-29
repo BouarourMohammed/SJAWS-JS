@@ -41,7 +41,7 @@ export const getAllAuth = async (url) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      timeout: 1000,
+      timeout: 10000,
     });
   } catch (error) {
     console.log(error);
