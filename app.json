@@ -21,7 +21,7 @@
       "bundleIdentifier": "com.yourcompany.yourappname",
       "buildNumber": "1.0.0",
       "config" : {
-        "googleMapsApiKey" : ""
+        "googleMapsApiKey" : "AIzaSyA0R4Gm1awpTKFevm2DEt_wmdFX5gz0vKE"
       }
     },
     "android": {
