@@ -21,7 +21,7 @@ export const RootStack = () => {
       {/* Bar Navigation  */}
       {/* <Stack.Screen name="root" component={BottomTabNavigation} />*/}
 
-      <Stack.Screen name="root" component={BottomTabNavigation} />
+      <Stack.Screen name="root" component={DrawerNavigation} />
 
     </Stack.Navigator>
   );
